@@ -12,7 +12,14 @@
       "rotate": 270,
       "attrs": {}
     },
-    { "type": "wokwi-servo", "id": "wokwi-servo-0", "top": 1159.6, "left": -720, "attrs": {} },
+    {
+      "type": "wokwi-servo",
+      "id": "wokwi-servo-0",
+      "top": 632.6,
+      "left": -516.6,
+      "rotate": 270,
+      "attrs": {}
+    },
     { "type": "SSD1306 ", "id": "SSD1306 -0", "top": 430, "left": 0, "attrs": {} },
     {
       "type": "wokwi-membrane-keypad",
@@ -24,25 +31,32 @@
     {
       "type": "wokwi-analog-joystick",
       "id": "wokwi-analog-joystick-0",
-      "top": 594.6,
-      "left": -522.6,
+      "top": 633,
+      "left": -580.2,
       "attrs": {}
     },
     {
       "type": "wokwi-pushbutton",
       "id": "wokwi-pushbutton-0",
-      "top": 1043,
-      "left": -604.8,
+      "top": 927.8,
+      "left": -508.8,
       "attrs": {}
     },
     {
       "type": "wokwi-relay-module",
       "id": "wokwi-relay-module-0",
-      "top": 720.2,
-      "left": -1075.2,
+      "top": 1065.8,
+      "left": -537.6,
       "attrs": {}
     },
-    { "type": "wokwi-servo", "id": "servo1", "top": 1063.6, "left": -739.2, "attrs": {} },
+    {
+      "type": "wokwi-servo",
+      "id": "servo1",
+      "top": 642.2,
+      "left": -449.4,
+      "rotate": 270,
+      "attrs": {}
+    },
     { "type": "wokwi-vcc", "id": "vcc1", "top": 768.76, "left": -240, "attrs": {} },
     { "type": "wokwi-gnd", "id": "gnd1", "top": 854.4, "left": -240.6, "attrs": {} },
     { "type": "wokwi-lcd1602", "id": "lcd1", "top": 838.63, "left": -1193.6, "attrs": {} },
@@ -53,6 +67,34 @@
       "left": -658.2,
       "rotate": 180,
       "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 743.15,
+      "left": -854.4,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 762.35,
+      "left": -844.8,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": 781.55,
+      "left": -835.2,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r4",
+      "top": 800.75,
+      "left": -825.6,
+      "attrs": { "value": "1000" }
     }
   ],
   "connections": [
@@ -90,7 +132,23 @@
     [ "pico:GP20", "wokwi-membrane-keypad-0:R4", "red", [ "v-77.11", "h-9.6" ] ],
     [ "wokwi-membrane-keypad-0:R2", "pico:GP22", "red", [ "v0" ] ],
     [ "wokwi-membrane-keypad-0:R1", "pico:GP26", "red", [ "v9.6", "h-19.2" ] ],
-    [ "wokwi-membrane-keypad-0:R3", "pico:GP21", "red", [ "v57.6", "h-0.3", "v0", "h9.6" ] ]
+    [ "wokwi-membrane-keypad-0:R3", "pico:GP21", "red", [ "v57.6", "h-0.3", "v0", "h9.6" ] ],
+    [ "wokwi-membrane-keypad-0:R1", "r1:2", "green", [ "v0" ] ],
+    [ "wokwi-membrane-keypad-0:R2", "r2:2", "green", [ "v0" ] ],
+    [ "wokwi-membrane-keypad-0:R3", "r3:2", "green", [ "v0" ] ],
+    [ "wokwi-membrane-keypad-0:R4", "r4:2", "green", [ "v0" ] ],
+    [ "r1:1", "r2:1", "green", [ "v0" ] ],
+    [ "r2:1", "r3:1", "green", [ "v0" ] ],
+    [ "r3:1", "r4:1", "green", [ "v0" ] ],
+    [ "r4:1", "pico:3V3", "green", [ "v0" ] ],
+    [ "wokwi-servo-0:GND", "bb1:tn.6", "black", [ "v28.8", "h-48" ] ],
+    [ "servo1:GND", "bb1:tn.7", "black", [ "v28.8", "h-105.6" ] ],
+    [ "wokwi-servo-0:V+", "bb1:tp.6", "red", [ "v19.2", "h-57.5" ] ],
+    [ "servo1:V+", "bb1:tp.7", "red", [ "v19.2", "h-115.1" ] ],
+    [ "wokwi-pushbutton-0:1.l", "bb1:6b.f", "", [ "$bb" ] ],
+    [ "wokwi-pushbutton-0:2.l", "bb1:6b.h", "", [ "$bb" ] ],
+    [ "wokwi-pushbutton-0:1.r", "bb1:13b.f", "", [ "$bb" ] ],
+    [ "wokwi-pushbutton-0:2.r", "bb1:13b.h", "", [ "$bb" ] ]
   ],
   "serialMonitor": { "display": "always", "newline": "lf", "convertEol": false },
   "dependencies": {}
