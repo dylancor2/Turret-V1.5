@@ -1,5 +1,10 @@
 #include <Keypad.h>
 #include <LiquidCrystal.h>
+#include <Servo.h>
+
+//#define VERT_PIN 27
+//#define HORZ_PIN 28
+
 
 LiquidCrystal lcd(0, 1, 2, 3, 4, 5);
 
@@ -24,13 +29,14 @@ bool locked = true;
 int guessPos = 0;
 char guess[10] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 
-
+Servo x, y;
 
 
 void setup() {
   lcd.begin(16, 2);
   start();
-
+  x.attach(7);
+  y.attach(8);
 }
 
 void loop() {
@@ -51,6 +57,16 @@ void loop() {
       }
     }
   }
+  /*if(!locked){
+    y.write(90);
+    x.write(90);
+    delay(1000);
+    y.write(180);
+    x.write(180);
+    delay(1000);
+    //y.write(map(analogRead(VERT_PIN), 0, 1023, 0, 180));
+    //x.write(map(analogRead(HORZ_PIN), 0, 1023, 0, 180));
+  }*/
   delay(10);
 }
 
@@ -177,5 +193,4 @@ void unlocked(){
   slowprint(" Turrt Enabled ");
   lcd.setCursor(0, 1);
   slowprint("Press # To Lock");
-
 }
