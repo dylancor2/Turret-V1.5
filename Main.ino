@@ -18,7 +18,13 @@ uint8_t colPins[COLS] = { 19, 18, 17, 16}; // Pins connected to C1, C2, C3, C4
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 bool passSet = false;
 int passPos = 0;
-String password[10];
+char password[10];
+
+bool locked = true;
+int guessPos = 0;
+char guess[10] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+
+
 
 
 void setup() {
@@ -31,8 +37,18 @@ void loop() {
   char key = keypad.getKey();
 
   if (key != NO_KEY) {
-    if(passSet == false){
+    if(!passSet){
       pass(key);
+    }
+    else{
+      if(locked){
+        guesst(key);
+      }
+      else{
+        if(key == '#'){
+          lock();
+        }
+      }
     }
   }
   delay(10);
@@ -60,12 +76,106 @@ void slowprint(String mes) {
 void pass(char next){
   lcd.setCursor(3, 1);
   password[passPos] = next;
-  passPos++;
-  for(int i = 0; i < passPos; i++){
-    lcd.print(password[i]);
+  if (passPos == 9){
+    passSet = true;
+    delay(500);
+    lcd.clear();
+    slowprint("  Password Set  ");
+    lcd.setCursor(0, 1);
+    slowprint(password);
+    slowprint("     ~");
+    delay(500);
+    for(int i = 0; i < 5; i++){
+      lcd.setCursor(14, 1);
+      lcd.print(5-i);
+      delay(1000);
+      lcd.setCursor(14, 1);
+      lcd.print(" ");
+      delay(200);
+    }
+    lcd.clear();
+    lock();
   }
-  for(int i = 0; i < 10-passPos; i++){
-    lcd.print(" ");
+  else{
+    passPos++;
+    for(int i = 0; i < passPos; i++){
+      lcd.print(password[i]);
+    }
+    for(int i = 0; i < 10-passPos; i++){
+      lcd.print(" ");
+    }
+    lcd.print(")  ");
   }
-  lcd.print(")  ");
+}
+
+void lock(){
+  locked = true;
+  lcd.clear();
+  slowprint("Turrt is Locked");
+  delay(3000);
+  for(int i = 0; i < 10; i++){
+        guess[i] = ' ';
+      }
+  guessPos = 0;
+  enterPass();
+}
+
+void enterPass(){
+  lcd.clear();
+  slowprint(" Enter Password ");
+  lcd.setCursor(0, 1);
+  delay(100);
+  lcd.print("  (          )  ");
+}
+
+void guesst(char next){
+  lcd.setCursor(3, 1);
+  guess[guessPos] = next;
+  if (guessPos == 9){
+    bool temp = true;
+    for(int i = 0; i < 10; i++){
+      if(password[i] != guess[i]){
+        temp = false;
+      }
+    }
+    if (temp){
+      unlocked();
+    }
+    else{
+      delay(250);
+      lcd.clear();
+      slowprint(" Incorrect Pass ");
+      lcd.setCursor(0, 1);
+      slowprint("~~~~~~~~~~~~~~~~");
+      for(int i = 0; i < 10; i++){
+        guess[i] = ' ';
+      }
+      guessPos = 0;
+      enterPass();
+    }
+  }
+  else{
+    guessPos++;
+    for(int i = 0; i < guessPos; i++){
+      lcd.print(guess[i]);
+    }
+    for(int i = 0; i < 10-guessPos; i++){
+      lcd.print(" ");
+    }
+    lcd.print(")  ");
+  }
+}
+
+void unlocked(){
+  locked = false;
+  delay(250);
+  lcd.clear();
+  slowprint("  Correct Pass  ");
+  lcd.setCursor(0, 1);
+  slowprint("~~~~~~~~~~~~~~~~");
+  lcd.clear();
+  slowprint(" Turrt Enabled ");
+  lcd.setCursor(0, 1);
+  slowprint("Press # To Lock");
+
 }
