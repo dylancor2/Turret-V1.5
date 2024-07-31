@@ -1,10 +1,19 @@
 #include <Keypad.h>
 #include <LiquidCrystal.h>
-#include <Servo.h>
 
-//#define VERT_PIN 27
-//#define HORZ_PIN 28
+#define VERT_PIN 27
+#define HORZ_PIN 28
+int x = 7;
+int y = 8;
 
+int pwX = 0;
+int pwY = 0;
+
+int rel = 9;
+
+int slid = 26;
+
+int led = 10;
 
 LiquidCrystal lcd(0, 1, 2, 3, 4, 5);
 
@@ -17,7 +26,7 @@ char keys[ROWS][COLS] = {
   { '*', '0', '#', 'D' }
 };
 
-uint8_t rowPins[ROWS] = { 26, 22, 21, 20 }; // Pins connected to R1, R2, R3, R4
+uint8_t rowPins[ROWS] = { 15, 22, 21, 20 }; // Pins connected to R1, R2, R3, R4
 uint8_t colPins[COLS] = { 19, 18, 17, 16}; // Pins connected to C1, C2, C3, C4
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
@@ -29,14 +38,17 @@ bool locked = true;
 int guessPos = 0;
 char guess[10] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 
-Servo x, y;
-
-
 void setup() {
   lcd.begin(16, 2);
   start();
-  x.attach(7);
-  y.attach(8);
+  pinMode(x, OUTPUT);
+  pinMode(y, OUTPUT);
+  moveServoY(0);
+  moveServoX(0);
+  pinMode(rel, OUTPUT);
+  digitalWrite(rel, LOW);
+  pinMode(led, OUTPUT);
+  digitalWrite(led, LOW);
 }
 
 void loop() {
@@ -57,16 +69,16 @@ void loop() {
       }
     }
   }
-  /*if(!locked){
-    y.write(90);
-    x.write(90);
-    delay(1000);
-    y.write(180);
-    x.write(180);
-    delay(1000);
-    //y.write(map(analogRead(VERT_PIN), 0, 1023, 0, 180));
-    //x.write(map(analogRead(HORZ_PIN), 0, 1023, 0, 180));
-  }*/
+  if(!locked){
+    moveServoY(map(analogRead(VERT_PIN), 0, 1023, 0, 180));
+    moveServoX(map(analogRead(HORZ_PIN), 0, 1023, 180, 0));
+    if(analogRead(slid) == 1023){
+      digitalWrite(rel, HIGH);
+    }
+    else{
+      digitalWrite(rel, LOW);
+    }
+  }
   delay(10);
 }
 
@@ -125,6 +137,7 @@ void pass(char next){
 }
 
 void lock(){
+  reset();
   locked = true;
   lcd.clear();
   slowprint("Turrt is Locked");
@@ -190,7 +203,31 @@ void unlocked(){
   lcd.setCursor(0, 1);
   slowprint("~~~~~~~~~~~~~~~~");
   lcd.clear();
+  digitalWrite(led, HIGH);
   slowprint(" Turrt Enabled ");
   lcd.setCursor(0, 1);
   slowprint("Press # To Lock");
+}
+
+void moveServoX(int pre){
+  int pulseWidth = map(pre, 0, 180, 1000, 2000);
+  digitalWrite(x, HIGH);
+  delayMicroseconds(pulseWidth);
+  digitalWrite(x, LOW);
+  delay(20 - pulseWidth / 1000);
+}
+
+void moveServoY(int pre){
+  int pulseWidth = map(pre, 0, 180, 1000, 2000);
+  digitalWrite(y, HIGH);
+  delayMicroseconds(pulseWidth);
+  digitalWrite(y, LOW);
+  delay(20 - pulseWidth / 1000);
+}
+
+void reset(){
+  digitalWrite(led, LOW);
+  digitalWrite(rel, LOW);
+  moveServoX(0);
+  moveServoY(0);
 }
