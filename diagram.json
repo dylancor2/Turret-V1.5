@@ -31,7 +31,7 @@
     {
       "type": "wokwi-analog-joystick",
       "id": "wokwi-analog-joystick-0",
-      "top": 633,
+      "top": 652.2,
       "left": -580.2,
       "attrs": {}
     },
@@ -52,8 +52,8 @@
     {
       "type": "wokwi-servo",
       "id": "servo1",
-      "top": 642.2,
-      "left": -449.4,
+      "top": 632.6,
+      "left": -439.8,
       "rotate": 270,
       "attrs": {}
     },
@@ -63,7 +63,7 @@
     {
       "type": "wokwi-led",
       "id": "led1",
-      "top": 980.8,
+      "top": 1028.8,
       "left": -658.2,
       "rotate": 180,
       "attrs": { "color": "red" }
@@ -101,7 +101,6 @@
     [ "pico:GP0", "$serialMonitor:RX", "", [] ],
     [ "pico:GP1", "$serialMonitor:TX", "", [] ],
     [ "pico:GND.5", "bb1:tn.1", "black", [ "v-38.71", "h0.04", "v-9.6" ] ],
-    [ "bb1:tn.2", "led1:C", "black", [ "v9.5", "h-8" ] ],
     [ "vcc1:VCC", "bb1:tp.25", "red", [ "v0" ] ],
     [ "gnd1:GND", "bb1:tn.25", "black", [ "v0" ] ],
     [
@@ -143,12 +142,24 @@
     [ "r4:1", "pico:3V3", "green", [ "v0" ] ],
     [ "wokwi-servo-0:GND", "bb1:tn.6", "black", [ "v28.8", "h-48" ] ],
     [ "servo1:GND", "bb1:tn.7", "black", [ "v28.8", "h-105.6" ] ],
-    [ "wokwi-servo-0:V+", "bb1:tp.6", "red", [ "v19.2", "h-57.5" ] ],
-    [ "servo1:V+", "bb1:tp.7", "red", [ "v19.2", "h-115.1" ] ],
     [ "wokwi-pushbutton-0:1.l", "bb1:6b.f", "", [ "$bb" ] ],
     [ "wokwi-pushbutton-0:2.l", "bb1:6b.h", "", [ "$bb" ] ],
     [ "wokwi-pushbutton-0:1.r", "bb1:13b.f", "", [ "$bb" ] ],
-    [ "wokwi-pushbutton-0:2.r", "bb1:13b.h", "", [ "$bb" ] ]
+    [ "wokwi-pushbutton-0:2.r", "bb1:13b.h", "", [ "$bb" ] ],
+    [ "wokwi-analog-joystick-0:VCC", "bb1:tp.3", "red", [ "v38.4", "h9.6" ] ],
+    [ "wokwi-analog-joystick-0:GND", "bb1:tn.8", "black", [ "v19.2", "h38.4" ] ],
+    [ "wokwi-analog-joystick-0:VERT", "pico:GP27", "gray", [ "v48", "h-240" ] ],
+    [ "wokwi-analog-joystick-0:HORZ", "pico:GP28", "white", [ "v48", "h-268.8" ] ],
+    [
+      "wokwi-analog-joystick-0:SEL",
+      "pico:GP6",
+      "blue",
+      [ "v28.8", "h-144", "v182.4", "h-124.8" ]
+    ],
+    [ "pico:GP7", "wokwi-servo-0:PWM", "violet", [ "v19.2", "h9.6" ] ],
+    [ "pico:GP8", "servo1:PWM", "purple", [ "v28.8", "h19.2" ] ],
+    [ "wokwi-servo-0:V+", "pico:3V3", "red", [ "v9.6", "h0.1" ] ],
+    [ "servo1:V+", "pico:3V3", "red", [ "v9.6", "h-460.7" ] ]
   ],
   "serialMonitor": { "display": "always", "newline": "lf", "convertEol": false },
   "dependencies": {}
