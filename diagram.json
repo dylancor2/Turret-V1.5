@@ -36,17 +36,10 @@
       "attrs": {}
     },
     {
-      "type": "wokwi-pushbutton",
-      "id": "wokwi-pushbutton-0",
-      "top": 927.8,
-      "left": -508.8,
-      "attrs": {}
-    },
-    {
       "type": "wokwi-relay-module",
       "id": "wokwi-relay-module-0",
-      "top": 1065.8,
-      "left": -537.6,
+      "top": 1085,
+      "left": -566.4,
       "attrs": {}
     },
     {
@@ -63,9 +56,9 @@
     {
       "type": "wokwi-led",
       "id": "led1",
-      "top": 1028.8,
-      "left": -658.2,
-      "rotate": 180,
+      "top": 1122,
+      "left": -319.8,
+      "rotate": 90,
       "attrs": { "color": "red" }
     },
     {
@@ -95,6 +88,31 @@
       "top": 800.75,
       "left": -825.6,
       "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc2",
+      "top": 1179.84,
+      "left": -335.8,
+      "rotate": 180,
+      "attrs": {}
+    },
+    { "type": "wokwi-gnd", "id": "gnd2", "top": 1171.2, "left": -365.4, "attrs": {} },
+    {
+      "type": "wokwi-slide-potentiometer",
+      "id": "pot1",
+      "top": 1017.8,
+      "left": -984.6,
+      "rotate": 180,
+      "attrs": { "travelLength": "30" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": 1035.6,
+      "left": -281.4,
+      "rotate": 90,
+      "attrs": { "color": "green" }
     }
   ],
   "connections": [
@@ -130,7 +148,6 @@
     [ "pico:GP19", "wokwi-membrane-keypad-0:C1", "gold", [ "v-86.71", "h-9.56" ] ],
     [ "pico:GP20", "wokwi-membrane-keypad-0:R4", "red", [ "v-77.11", "h-9.6" ] ],
     [ "wokwi-membrane-keypad-0:R2", "pico:GP22", "red", [ "v0" ] ],
-    [ "wokwi-membrane-keypad-0:R1", "pico:GP26", "red", [ "v9.6", "h-19.2" ] ],
     [ "wokwi-membrane-keypad-0:R3", "pico:GP21", "red", [ "v57.6", "h-0.3", "v0", "h9.6" ] ],
     [ "wokwi-membrane-keypad-0:R1", "r1:2", "green", [ "v0" ] ],
     [ "wokwi-membrane-keypad-0:R2", "r2:2", "green", [ "v0" ] ],
@@ -142,10 +159,6 @@
     [ "r4:1", "pico:3V3", "green", [ "v0" ] ],
     [ "wokwi-servo-0:GND", "bb1:tn.6", "black", [ "v28.8", "h-48" ] ],
     [ "servo1:GND", "bb1:tn.7", "black", [ "v28.8", "h-105.6" ] ],
-    [ "wokwi-pushbutton-0:1.l", "bb1:6b.f", "", [ "$bb" ] ],
-    [ "wokwi-pushbutton-0:2.l", "bb1:6b.h", "", [ "$bb" ] ],
-    [ "wokwi-pushbutton-0:1.r", "bb1:13b.f", "", [ "$bb" ] ],
-    [ "wokwi-pushbutton-0:2.r", "bb1:13b.h", "", [ "$bb" ] ],
     [ "wokwi-analog-joystick-0:VCC", "bb1:tp.3", "red", [ "v38.4", "h9.6" ] ],
     [ "wokwi-analog-joystick-0:GND", "bb1:tn.8", "black", [ "v19.2", "h38.4" ] ],
     [ "wokwi-analog-joystick-0:VERT", "pico:GP27", "gray", [ "v48", "h-240" ] ],
@@ -159,7 +172,19 @@
     [ "pico:GP7", "wokwi-servo-0:PWM", "violet", [ "v19.2", "h9.6" ] ],
     [ "pico:GP8", "servo1:PWM", "purple", [ "v28.8", "h19.2" ] ],
     [ "wokwi-servo-0:V+", "pico:3V3", "red", [ "v9.6", "h0.1" ] ],
-    [ "servo1:V+", "pico:3V3", "red", [ "v9.6", "h-460.7" ] ]
+    [ "servo1:V+", "pico:3V3", "red", [ "v9.6", "h-460.7" ] ],
+    [ "wokwi-relay-module-0:IN", "pico:GP9", "cyan", [ "h0" ] ],
+    [ "wokwi-relay-module-0:GND", "bb1:tn.9", "black", [ "h-9.6", "v-38.8", "h124.8" ] ],
+    [ "wokwi-relay-module-0:VCC", "bb1:tp.9", "red", [ "h0", "v-38.4", "h105.6" ] ],
+    [ "vcc2:VCC", "led1:A", "red", [ "v0" ] ],
+    [ "led1:C", "wokwi-relay-module-0:NO", "green", [ "h0" ] ],
+    [ "gnd2:GND", "wokwi-relay-module-0:COM", "black", [ "v0" ] ],
+    [ "wokwi-membrane-keypad-0:R1", "pico:GP15", "red", [ "v9.6", "h105.6", "v201.6" ] ],
+    [ "pot1:GND", "pico:GND.2", "black", [ "v-48", "h4.4" ] ],
+    [ "pot1:VCC", "bb1:tp.4", "red", [ "h182.4", "v-48", "h67.2" ] ],
+    [ "pot1:SIG", "pico:GP26", "#8f4814", [ "h0" ] ],
+    [ "led2:C", "bb1:tn.24", "black", [ "h0" ] ],
+    [ "led2:A", "pico:GP10", "red", [ "h0" ] ]
   ],
   "serialMonitor": { "display": "always", "newline": "lf", "convertEol": false },
   "dependencies": {}
